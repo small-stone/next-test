@@ -40,9 +40,12 @@ export default async function Home() {
 }
 
 async function getData() {
-  const res = await fetch("/api/banner", {
-    next: { revalidate: 1 },
-  });
+  const res = await fetch(
+    "https://next-test-git-main-smallstones-projects.vercel.app/api/banner",
+    {
+      next: { revalidate: 1 },
+    }
+  );
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
