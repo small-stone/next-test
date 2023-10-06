@@ -74,9 +74,12 @@ export default function Detail({ params }: { params: { id: string } }) {
 }
 
 async function getData(dataId: string | number) {
-  const res = await fetch(`http://localhost:3001/api/detail/?id=${dataId}`, {
-    next: { revalidate: 1 },
-  });
+  const res = await fetch(
+    `https://next-test-git-main-smallstones-projects.vercel.app//api/detail/?id=${dataId}`,
+    {
+      next: { revalidate: 1 },
+    }
+  );
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary

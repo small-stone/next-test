@@ -64,9 +64,12 @@ export default function Filter({ tagData }: IProps) {
 }
 
 async function getTagList(id: string | number) {
-  const res = await fetch(`http://localhost:3001/api/list?id=${id}`, {
-    next: { revalidate: 1 },
-  });
+  const res = await fetch(
+    `https://next-test-git-main-smallstones-projects.vercel.app//api/list?id=${id}`,
+    {
+      next: { revalidate: 1 },
+    }
+  );
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
