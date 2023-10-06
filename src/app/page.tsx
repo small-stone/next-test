@@ -57,7 +57,7 @@ async function getData() {
 
 async function getTag() {
   const res = await fetch(
-    "https://next-test-git-main-smallstones-projects.vercel.app//api/tag",
+    "https://next-test-git-main-smallstones-projects.vercel.app/api/tag",
     {
       next: { revalidate: 1 },
     }

@@ -65,7 +65,7 @@ export default function Filter({ tagData }: IProps) {
 
 async function getTagList(id: string | number) {
   const res = await fetch(
-    `https://next-test-git-main-smallstones-projects.vercel.app//api/list?id=${id}`,
+    `https://next-test-git-main-smallstones-projects.vercel.app/api/list?id=${id}`,
     {
       next: { revalidate: 1 },
     }
