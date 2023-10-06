@@ -10,9 +10,11 @@ import "./index.css";
 export default function Detail({ params }: { params: { id: string } }) {
   const [data, setData] = useState({} as any);
   useEffect(() => {
-    getData(params.id).then((res) => {
-      setData(res);
-    });
+    fetch(`/api/detail?id=${params.id}`)
+      .then((res) => res.json())
+      .then((res) => {
+        setData(res);
+      });
   }, []);
   return (
     <div>
@@ -71,20 +73,4 @@ export default function Detail({ params }: { params: { id: string } }) {
       </div>
     </div>
   );
-}
-
-async function getData(dataId: string | number) {
-  const res = await fetch(
-    `https://next-test-git-main-smallstones-projects.vercel.app/api/detail/?id=${dataId}`,
-    {
-      next: { revalidate: 1 },
-    }
-  );
-
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
 }

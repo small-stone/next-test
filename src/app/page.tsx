@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Search from "./components/search";
 import Banner from "./components/banner";
@@ -5,9 +8,24 @@ import Filter from "./components/filter";
 
 import "./index.css";
 
-export default async function Home() {
-  const data = await getData();
-  const tagData = await getTag();
+export default function Home() {
+  // const data = await getData();
+  // const tagData = await getTag();
+  const [data, setData] = useState([]);
+  const [tagData, setTagData] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/banner")
+      .then((res) => res.json())
+      .then((res) => {
+        setData(res);
+      });
+    fetch("/api/tag")
+      .then((res) => res.json())
+      .then((res) => {
+        setTagData(res);
+      });
+  }, []);
 
   return (
     <div className="min-h-screen px-2 pt-20 pb-[70px]">
@@ -37,36 +55,4 @@ export default async function Home() {
       </div>
     </div>
   );
-}
-
-async function getData() {
-  const res = await fetch(
-    "https://next-test-git-main-smallstones-projects.vercel.app/api/banner",
-    {
-      next: { revalidate: 1 },
-    }
-  );
-
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
-
-async function getTag() {
-  const res = await fetch(
-    "https://next-test-git-main-smallstones-projects.vercel.app/api/tag",
-    {
-      next: { revalidate: 1 },
-    }
-  );
-
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
 }

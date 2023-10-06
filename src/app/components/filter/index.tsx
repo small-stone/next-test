@@ -18,9 +18,11 @@ export default function Filter({ tagData }: IProps) {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    getTagList(current).then((res) => {
-      setList(res);
-    });
+    fetch(`/api/list?id=${current}`)
+      .then((res) => res.json())
+      .then((res) => {
+        setList(res);
+      });
   }, [current]);
 
   return (
@@ -61,20 +63,4 @@ export default function Filter({ tagData }: IProps) {
       </div>
     </div>
   );
-}
-
-async function getTagList(id: string | number) {
-  const res = await fetch(
-    `https://next-test-git-main-smallstones-projects.vercel.app/api/list?id=${id}`,
-    {
-      next: { revalidate: 1 },
-    }
-  );
-
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
 }
