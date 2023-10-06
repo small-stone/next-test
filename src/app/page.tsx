@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import Search from "./components/search";
 import Banner from "./components/banner";
@@ -6,20 +5,19 @@ import Filter from "./components/filter";
 
 import "./index.css";
 
-export default function Home() {
-  const onSearch = (search: string) => {
-    // 这里是搜索的逻辑
-  };
+export default async function Home() {
+  const data = await getData();
+  const tagData = await getTag();
 
   return (
     <div className="min-h-screen px-2 pt-20 pb-[70px]">
       <div className="px-3 mb-7">
-        <Search onSearch={onSearch} />
+        <Search />
       </div>
       <div className="mb-[40px]">
-        <Banner />
+        <Banner list={data} />
       </div>
-      <Filter />
+      <Filter tagData={tagData} />
       <div className="fixed w-full h-[65px] bottom-0 left-0 bg-white flex text-center text-violet-950 text-xs ">
         <div className="flex-1 flex justify-center items-center flex-col gap-1">
           <div className="footer-icon flex justify-center items-center">
@@ -39,4 +37,30 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+async function getData() {
+  const res = await fetch("http://localhost:3001/api/banner", {
+    next: { revalidate: 1 },
+  });
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
+async function getTag() {
+  const res = await fetch("http://localhost:3001/api/tag", {
+    next: { revalidate: 1 },
+  });
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
 }

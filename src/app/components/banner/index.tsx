@@ -1,13 +1,16 @@
+"use client";
+
 import React from "react";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Detail from "./detail";
+import { IDetail } from "./types";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "./index.css";
 
-export default function Banner() {
+export default function Banner({ list }: { list: IDetail[] }) {
   return (
     <Swiper
       modules={[Pagination]}
@@ -18,9 +21,9 @@ export default function Banner() {
         overflowY: "visible",
       }}
     >
-      {[1, 2, 3, 4, 5].map((item) => (
-        <SwiperSlide key={item}>
-          <Detail />
+      {list?.map((item: IDetail) => (
+        <SwiperSlide key={item.id}>
+          <Detail item={item} />
         </SwiperSlide>
       ))}
     </Swiper>

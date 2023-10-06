@@ -2,11 +2,11 @@
   @apply w-[40px] h-[40px] border-2 border-neutral-400 bg-stone-300 rounded-full absolute;
 }
 
-.button {
+.enter-dream {
   @apply text-center leading-[52px] text-violet-950  h-[52px]  font-bold w-[260px] rounded-[52px] px-4 relative bg-white;
 }
 
-.button::after {
+.enter-dream::after {
   position: absolute;
   top: -2px;
   bottom: -2px;

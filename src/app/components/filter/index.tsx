@@ -1,42 +1,39 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Card from "./card";
 
 import "./index.css";
 
-const tagList = [
-  {
-    name: "Recommended",
-    children: ["Default", "Recent", "Hot", "Nodes"],
-  },
-  {
-    name: "Fan Fiction",
-    children: ["Default", "Recent", "Hot", "Nodes"],
-  },
-  {
-    name: "Sci-fi",
-    children: ["Default", "Recent", "Hot", "Nodes"],
-  },
-  {
-    name: "RPG",
-    children: ["Default", "Recent", "Hot", "Nodes"],
-  },
-];
-export default function Filter() {
+interface IProps {
+  tagData: any[];
+}
+
+const filterList = ["Default", "Recent", "Hot", "Nodes"];
+
+export default function Filter({ tagData }: IProps) {
   const [current, setCurrent] = useState(0);
   const [currentChild, setCurrentChild] = useState(0);
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    getTagList(current).then((res) => {
+      setList(res);
+    });
+  }, [current]);
 
   return (
     <div className="">
       <div className="w-full text-blue-900 px-[30px]">
         <div className="border-b-[1px] border-[#EDEDED] flex justify-between py-2">
-          {tagList.map((tag, index) => (
+          {tagData.map((tag, index) => (
             <div
               key={tag.name}
               className={index === current ? "text-pink-700 font-bold" : ""}
               onClick={() => setCurrent(index)}
             >
-              {tag.name}
+              {tag.tag}
             </div>
           ))}
           <div className="flex justify-center items-center">
@@ -44,7 +41,7 @@ export default function Filter() {
           </div>
         </div>
         <div className="text-sm flex justify-between py-2">
-          {tagList[current].children.map((child, index) => (
+          {filterList.map((child, index) => (
             <div
               className={currentChild === index ? "font-bold" : ""}
               key={child}
@@ -58,12 +55,23 @@ export default function Filter() {
         </div>
       </div>
       <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-        {Array(8)
-          .fill(0)
-          .map((_, index) => (
-            <Card key={index} />
-          ))}
+        {list?.map((item, index) => (
+          <Card key={index} item={item} />
+        ))}
       </div>
     </div>
   );
+}
+
+async function getTagList(id: string | number) {
+  const res = await fetch(`http://localhost:3001/api/list?id=${id}`, {
+    next: { revalidate: 1 },
+  });
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
 }

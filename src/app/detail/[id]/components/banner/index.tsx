@@ -6,7 +6,7 @@ import Image from "next/image";
 import "swiper/css";
 import "swiper/css/navigation";
 
-export default function Banner() {
+export default function Banner({ imgsrc }: { imgsrc: string }) {
   return (
     <Swiper
       spaceBetween={0}
@@ -14,17 +14,19 @@ export default function Banner() {
       modules={[Navigation]}
       navigation
     >
-      {[1, 2, 3, 4, 5].map((item) => (
-        <SwiperSlide key={item}>
-          <Image
-            src="/detail.png"
-            layout="responsive"
-            alt="banner"
-            width={1000}
-            height={500}
-          />
-        </SwiperSlide>
-      ))}
+      {Array(5)
+        .fill(0)
+        .map((item) => (
+          <SwiperSlide key={item}>
+            <Image
+              src={imgsrc}
+              layout="responsive"
+              alt="banner"
+              width={1000}
+              height={500}
+            />
+          </SwiperSlide>
+        ))}
     </Swiper>
   );
 }
