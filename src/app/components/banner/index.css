@@ -1,0 +1,21 @@
+.swiper-pagination-bullet-active {
+  width: 12px !important;
+  border-radius: 6px !important;
+}
+.banner-text-wrapper {
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.button {
+  @apply bg-white;
+  background: linear-gradient(
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 1),
+    rgba(183, 223, 200, 1)
+  );
+}

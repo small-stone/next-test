@@ -1,0 +1,8 @@
+.header-icon {
+  @apply w-[36px] h-[36px] rounded-[50%] flex items-center justify-center bg-white shadow-md;
+}
+
+.footer-icon {
+  @apply w-[36px] h-[36px] rounded-[36px] shadow-xl;
+  background-image: linear-gradient(#ffffff, #ffffff, #b7dfc8);
+}
